@@ -1,0 +1,233 @@
+{
+	"info": {
+		"_postman_id": "b6c38f71-1e15-4925-bb52-1487820b8c61",
+		"name": "shopping cart rest api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23215385"
+	},
+	"item": [
+		{
+			"name": "get access token",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "client_authentication",
+							"value": "body",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "queryParams",
+							"type": "string"
+						},
+						{
+							"key": "accessTokenUrl",
+							"value": "http://rest-api.upskills.in/api/rest/oauth2/token/client_credentials",
+							"type": "string"
+						},
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "string"
+						},
+						{
+							"key": "tokenName",
+							"value": "access token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseurl}}/oauth2/token/client_credentials",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"oauth2",
+						"token",
+						"client_credentials"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"firstname\": \"Demo\",\r\n  \"lastname\": \"User\",\r\n  \"email\": \"nash1@vipmail.hu\",\r\n  \"password\": \"password\",\r\n  \"confirm\": \"password\",\r\n  \"telephone\": \"1-541-754-3010\",\r\n  \"customer_group_id\": \"1\",\r\n  \"agree\": \"1\",\r\n  \"custom_field\": {\r\n    \"account\": {\r\n      \"1\": \"+364545454\"\r\n    }\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseurl}}/register",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"demo@test.com\",\r\n  \"password\": \"demo\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseurl}}/login",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "forgot password",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n  \"email\": \"test@test.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseurl}}/forgotten",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"forgotten"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get account details",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"var len = jsonData.length;\r",
+							"console.log(len)\r",
+							"for(i=0;i<len;i++)\r",
+							"{\r",
+							"    const length = jsonData[i];\r",
+							"    if(length.country == \"France\")\r",
+							"    {\r",
+							"        console.log(length.country)\r",
+							"        var countryid = jsonData[i].id;\r",
+							"        console.log(countryid)\r",
+							"        pm.environmemt.set(\"cid\", countryid)\r",
+							"    }\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/account",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"account"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update account data",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"firstname\": \"Demo\",\r\n  \"lastname\": \"User\",\r\n  \"email\": \"nash1@vipmail.hu\",\r\n  \"telephone\": \"1-541-754-3010\",\r\n  \"custom_field\": {\r\n    \"account\": {\r\n      \"1\": \"+364545454\"\r\n    }\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseurl}}/account",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"account"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "log out",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/logout",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"logout"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
